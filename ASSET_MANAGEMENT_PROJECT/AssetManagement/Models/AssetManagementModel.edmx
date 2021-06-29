@@ -1,0 +1,693 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ASSET_MANAGEMENTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ASSET">
+          <Key>
+            <PropertyRef Name="AS_ID" />
+          </Key>
+          <Property Name="AS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AT_ID" Type="int" Nullable="false" />
+          <Property Name="AS_NAME" Type="nvarchar" MaxLength="256" />
+          <Property Name="AS_STATUS" Type="nvarchar" MaxLength="256" />
+          <Property Name="AS_PURCHASE_DATE" Type="datetime" />
+          <Property Name="AS_PROVIDER" Type="nvarchar" MaxLength="512" />
+          <Property Name="AS_DESCRIPTION" Type="nvarchar" MaxLength="1024" />
+          <Property Name="AS_VALUE" Type="int" />
+          <Property Name="AS_FLAG" Type="bit" />
+        </EntityType>
+        <EntityType Name="ASSET_HAND_OVER_REALATIONSHIP">
+          <Key>
+            <PropertyRef Name="AS_ID" />
+            <PropertyRef Name="HO_ID" />
+          </Key>
+          <Property Name="AS_ID" Type="int" Nullable="false" />
+          <Property Name="HO_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ASSET_REQUEST">
+          <Key>
+            <PropertyRef Name="AR_ID" />
+          </Key>
+          <Property Name="AR_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="U_ID" Type="int" Nullable="false" />
+          <Property Name="RT_ID" Type="int" Nullable="false" />
+          <Property Name="AS_ID" Type="int" Nullable="false" />
+          <Property Name="AR_REASON" Type="nvarchar" MaxLength="256" />
+          <Property Name="AR_ASSET_STATUS" Type="nvarchar" MaxLength="1024" />
+          <Property Name="AR_REQUEST_DATE" Type="datetime" />
+          <Property Name="AR_APPROVE_DATE" Type="datetime" />
+          <Property Name="AR_STATUS" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="ASSET_TYPE">
+          <Key>
+            <PropertyRef Name="AT_ID" />
+          </Key>
+          <Property Name="AT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AT_NAME" Type="nvarchar" MaxLength="256" />
+          <Property Name="AT_CODE" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="ASSET_USER_RELATIONSHIP">
+          <Key>
+            <PropertyRef Name="ASSET_USER_RELATIONSHIP_ID" />
+          </Key>
+          <Property Name="ASSET_USER_RELATIONSHIP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AS_ID" Type="int" Nullable="false" />
+          <Property Name="U_ID" Type="int" Nullable="false" />
+          <Property Name="RECEIVE_DATE" Type="datetime" />
+          <Property Name="HAND_OVER_DATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HAND_OVER">
+          <Key>
+            <PropertyRef Name="HO_ID" />
+          </Key>
+          <Property Name="HO_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="U_SEND_ASSET" Type="int" Nullable="false" />
+          <Property Name="U_RECEIVE_ASSET" Type="int" Nullable="false" />
+          <Property Name="HO_DATE" Type="datetime" />
+          <Property Name="HO_CONntext" Type="ntext" />
+        </EntityType>
+        <EntityType Name="REQUEST_TYPE">
+          <Key>
+            <PropertyRef Name="RT_ID" />
+          </Key>
+          <Property Name="RT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RT_NAME" Type="nvarchar" MaxLength="256" />
+          <Property Name="RT_CODE" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="U_ID" />
+          </Key>
+          <Property Name="U_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UT_ID" Type="int" Nullable="false" />
+          <Property Name="U_USERNAME" Type="nvarchar" MaxLength="256" />
+          <Property Name="U_PASSWORD" Type="nvarchar" MaxLength="256" />
+          <Property Name="U_FULLNAME" Type="nvarchar" MaxLength="256" />
+          <Property Name="U_WORK_DATE" Type="datetime" />
+          <Property Name="U_STATUS" Type="nvarchar" MaxLength="256" />
+          <Property Name="U_POSITION" Type="nvarchar" MaxLength="256" />
+          <Property Name="U_DEPARTMENT" Type="nvarchar" MaxLength="256" />
+          <Property Name="U_FLAG" Type="bit" />
+        </EntityType>
+        <EntityType Name="USER_TYPE">
+          <Key>
+            <PropertyRef Name="UT_ID" />
+          </Key>
+          <Property Name="UT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UT_ROLE" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <Association Name="FK_ASSET_HA_ASSET_HAN_ASSET">
+          <End Role="ASSET" Type="Self.ASSET" Multiplicity="1" />
+          <End Role="ASSET_HAND_OVER_REALATIONSHIP" Type="Self.ASSET_HAND_OVER_REALATIONSHIP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSET">
+              <PropertyRef Name="AS_ID" />
+            </Principal>
+            <Dependent Role="ASSET_HAND_OVER_REALATIONSHIP">
+              <PropertyRef Name="AS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSET_HA_ASSET_HAN_HAND_OVE">
+          <End Role="HAND_OVER" Type="Self.HAND_OVER" Multiplicity="1" />
+          <End Role="ASSET_HAND_OVER_REALATIONSHIP" Type="Self.ASSET_HAND_OVER_REALATIONSHIP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HAND_OVER">
+              <PropertyRef Name="HO_ID" />
+            </Principal>
+            <Dependent Role="ASSET_HAND_OVER_REALATIONSHIP">
+              <PropertyRef Name="HO_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSET_RE_RELATIONS_ASSET">
+          <End Role="ASSET" Type="Self.ASSET" Multiplicity="1" />
+          <End Role="ASSET_REQUEST" Type="Self.ASSET_REQUEST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSET">
+              <PropertyRef Name="AS_ID" />
+            </Principal>
+            <Dependent Role="ASSET_REQUEST">
+              <PropertyRef Name="AS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSET_RE_RELATIONS_REQUEST_">
+          <End Role="REQUEST_TYPE" Type="Self.REQUEST_TYPE" Multiplicity="1" />
+          <End Role="ASSET_REQUEST" Type="Self.ASSET_REQUEST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REQUEST_TYPE">
+              <PropertyRef Name="RT_ID" />
+            </Principal>
+            <Dependent Role="ASSET_REQUEST">
+              <PropertyRef Name="RT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSET_RE_SEND_REQU_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="ASSET_REQUEST" Type="Self.ASSET_REQUEST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="U_ID" />
+            </Principal>
+            <Dependent Role="ASSET_REQUEST">
+              <PropertyRef Name="U_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSET_RELATIONS_ASSET_TY">
+          <End Role="ASSET_TYPE" Type="Self.ASSET_TYPE" Multiplicity="1" />
+          <End Role="ASSET" Type="Self.ASSET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSET_TYPE">
+              <PropertyRef Name="AT_ID" />
+            </Principal>
+            <Dependent Role="ASSET">
+              <PropertyRef Name="AT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSET_US_RELATIONS_ASSET">
+          <End Role="ASSET" Type="Self.ASSET" Multiplicity="1" />
+          <End Role="ASSET_USER_RELATIONSHIP" Type="Self.ASSET_USER_RELATIONSHIP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSET">
+              <PropertyRef Name="AS_ID" />
+            </Principal>
+            <Dependent Role="ASSET_USER_RELATIONSHIP">
+              <PropertyRef Name="AS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSET_US_RELATIONS_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="ASSET_USER_RELATIONSHIP" Type="Self.ASSET_USER_RELATIONSHIP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="U_ID" />
+            </Principal>
+            <Dependent Role="ASSET_USER_RELATIONSHIP">
+              <PropertyRef Name="U_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HAND_OVE_RECV_HAND_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="HAND_OVER" Type="Self.HAND_OVER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="U_ID" />
+            </Principal>
+            <Dependent Role="HAND_OVER">
+              <PropertyRef Name="U_RECEIVE_ASSET" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HAND_OVE_SEND_HAND_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="HAND_OVER" Type="Self.HAND_OVER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="U_ID" />
+            </Principal>
+            <Dependent Role="HAND_OVER">
+              <PropertyRef Name="U_SEND_ASSET" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USER_RELATIONS_USER_TYP">
+          <End Role="USER_TYPE" Type="Self.USER_TYPE" Multiplicity="1" />
+          <End Role="USER" Type="Self.USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER_TYPE">
+              <PropertyRef Name="UT_ID" />
+            </Principal>
+            <Dependent Role="USER">
+              <PropertyRef Name="UT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ASSET_MANAGEMENTModelStoreContainer">
+          <EntitySet Name="ASSET" EntityType="Self.ASSET" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ASSET_HAND_OVER_REALATIONSHIP" EntityType="Self.ASSET_HAND_OVER_REALATIONSHIP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ASSET_REQUEST" EntityType="Self.ASSET_REQUEST" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ASSET_TYPE" EntityType="Self.ASSET_TYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ASSET_USER_RELATIONSHIP" EntityType="Self.ASSET_USER_RELATIONSHIP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HAND_OVER" EntityType="Self.HAND_OVER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REQUEST_TYPE" EntityType="Self.REQUEST_TYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USER" EntityType="Self.USER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USER_TYPE" EntityType="Self.USER_TYPE" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ASSET_HA_ASSET_HAN_ASSET" Association="Self.FK_ASSET_HA_ASSET_HAN_ASSET">
+            <End Role="ASSET" EntitySet="ASSET" />
+            <End Role="ASSET_HAND_OVER_REALATIONSHIP" EntitySet="ASSET_HAND_OVER_REALATIONSHIP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSET_HA_ASSET_HAN_HAND_OVE" Association="Self.FK_ASSET_HA_ASSET_HAN_HAND_OVE">
+            <End Role="HAND_OVER" EntitySet="HAND_OVER" />
+            <End Role="ASSET_HAND_OVER_REALATIONSHIP" EntitySet="ASSET_HAND_OVER_REALATIONSHIP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSET_RE_RELATIONS_ASSET" Association="Self.FK_ASSET_RE_RELATIONS_ASSET">
+            <End Role="ASSET" EntitySet="ASSET" />
+            <End Role="ASSET_REQUEST" EntitySet="ASSET_REQUEST" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSET_RE_RELATIONS_REQUEST_" Association="Self.FK_ASSET_RE_RELATIONS_REQUEST_">
+            <End Role="REQUEST_TYPE" EntitySet="REQUEST_TYPE" />
+            <End Role="ASSET_REQUEST" EntitySet="ASSET_REQUEST" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSET_RE_SEND_REQU_USER" Association="Self.FK_ASSET_RE_SEND_REQU_USER">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="ASSET_REQUEST" EntitySet="ASSET_REQUEST" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSET_RELATIONS_ASSET_TY" Association="Self.FK_ASSET_RELATIONS_ASSET_TY">
+            <End Role="ASSET_TYPE" EntitySet="ASSET_TYPE" />
+            <End Role="ASSET" EntitySet="ASSET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSET_US_RELATIONS_ASSET" Association="Self.FK_ASSET_US_RELATIONS_ASSET">
+            <End Role="ASSET" EntitySet="ASSET" />
+            <End Role="ASSET_USER_RELATIONSHIP" EntitySet="ASSET_USER_RELATIONSHIP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSET_US_RELATIONS_USER" Association="Self.FK_ASSET_US_RELATIONS_USER">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="ASSET_USER_RELATIONSHIP" EntitySet="ASSET_USER_RELATIONSHIP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HAND_OVE_RECV_HAND_USER" Association="Self.FK_HAND_OVE_RECV_HAND_USER">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="HAND_OVER" EntitySet="HAND_OVER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HAND_OVE_SEND_HAND_USER" Association="Self.FK_HAND_OVE_SEND_HAND_USER">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="HAND_OVER" EntitySet="HAND_OVER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_RELATIONS_USER_TYP" Association="Self.FK_USER_RELATIONS_USER_TYP">
+            <End Role="USER_TYPE" EntitySet="USER_TYPE" />
+            <End Role="USER" EntitySet="USER" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ASSET_MANAGEMENTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ASSET">
+          <Key>
+            <PropertyRef Name="AS_ID" />
+          </Key>
+          <Property Name="AS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AT_ID" Type="Int32" Nullable="false" />
+          <Property Name="AS_NAME" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="AS_STATUS" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="AS_PURCHASE_DATE" Type="DateTime" Precision="3" />
+          <Property Name="AS_PROVIDER" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="AS_DESCRIPTION" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="AS_VALUE" Type="Int32" />
+          <Property Name="AS_FLAG" Type="Boolean" />
+          <NavigationProperty Name="ASSET_REQUEST" Relationship="Self.FK_ASSET_RE_RELATIONS_ASSET" FromRole="ASSET" ToRole="ASSET_REQUEST" />
+          <NavigationProperty Name="ASSET_TYPE" Relationship="Self.FK_ASSET_RELATIONS_ASSET_TY" FromRole="ASSET" ToRole="ASSET_TYPE" />
+          <NavigationProperty Name="ASSET_USER_RELATIONSHIP" Relationship="Self.FK_ASSET_US_RELATIONS_ASSET" FromRole="ASSET" ToRole="ASSET_USER_RELATIONSHIP" />
+          <NavigationProperty Name="HAND_OVER" Relationship="Self.ASSET_HAND_OVER_REALATIONSHIP" FromRole="ASSET" ToRole="HAND_OVER" />
+        </EntityType>
+        <EntityType Name="ASSET_REQUEST">
+          <Key>
+            <PropertyRef Name="AR_ID" />
+          </Key>
+          <Property Name="AR_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="U_ID" Type="Int32" Nullable="false" />
+          <Property Name="RT_ID" Type="Int32" Nullable="false" />
+          <Property Name="AS_ID" Type="Int32" Nullable="false" />
+          <Property Name="AR_REASON" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="AR_ASSET_STATUS" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="AR_REQUEST_DATE" Type="DateTime" Precision="3" />
+          <Property Name="AR_APPROVE_DATE" Type="DateTime" Precision="3" />
+          <Property Name="AR_STATUS" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ASSET" Relationship="Self.FK_ASSET_RE_RELATIONS_ASSET" FromRole="ASSET_REQUEST" ToRole="ASSET" />
+          <NavigationProperty Name="REQUEST_TYPE" Relationship="Self.FK_ASSET_RE_RELATIONS_REQUEST_" FromRole="ASSET_REQUEST" ToRole="REQUEST_TYPE" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_ASSET_RE_SEND_REQU_USER" FromRole="ASSET_REQUEST" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="ASSET_TYPE">
+          <Key>
+            <PropertyRef Name="AT_ID" />
+          </Key>
+          <Property Name="AT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AT_NAME" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="AT_CODE" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ASSETs" Relationship="Self.FK_ASSET_RELATIONS_ASSET_TY" FromRole="ASSET_TYPE" ToRole="ASSET" />
+        </EntityType>
+        <EntityType Name="ASSET_USER_RELATIONSHIP">
+          <Key>
+            <PropertyRef Name="ASSET_USER_RELATIONSHIP_ID" />
+          </Key>
+          <Property Name="ASSET_USER_RELATIONSHIP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AS_ID" Type="Int32" Nullable="false" />
+          <Property Name="U_ID" Type="Int32" Nullable="false" />
+          <Property Name="RECEIVE_DATE" Type="DateTime" Precision="3" />
+          <Property Name="HAND_OVER_DATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ASSET" Relationship="Self.FK_ASSET_US_RELATIONS_ASSET" FromRole="ASSET_USER_RELATIONSHIP" ToRole="ASSET" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_ASSET_US_RELATIONS_USER" FromRole="ASSET_USER_RELATIONSHIP" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="HAND_OVER">
+          <Key>
+            <PropertyRef Name="HO_ID" />
+          </Key>
+          <Property Name="HO_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="U_SEND_ASSET" Type="Int32" Nullable="false" />
+          <Property Name="U_RECEIVE_ASSET" Type="Int32" Nullable="false" />
+          <Property Name="HO_DATE" Type="DateTime" Precision="3" />
+          <Property Name="HO_CONntext" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_HAND_OVE_RECV_HAND_USER" FromRole="HAND_OVER" ToRole="USER" />
+          <NavigationProperty Name="USER1" Relationship="Self.FK_HAND_OVE_SEND_HAND_USER" FromRole="HAND_OVER" ToRole="USER" />
+          <NavigationProperty Name="ASSETs" Relationship="Self.ASSET_HAND_OVER_REALATIONSHIP" FromRole="HAND_OVER" ToRole="ASSET" />
+        </EntityType>
+        <EntityType Name="REQUEST_TYPE">
+          <Key>
+            <PropertyRef Name="RT_ID" />
+          </Key>
+          <Property Name="RT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RT_NAME" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="RT_CODE" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ASSET_REQUEST" Relationship="Self.FK_ASSET_RE_RELATIONS_REQUEST_" FromRole="REQUEST_TYPE" ToRole="ASSET_REQUEST" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="U_ID" />
+          </Key>
+          <Property Name="U_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UT_ID" Type="Int32" Nullable="false" />
+          <Property Name="U_USERNAME" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="U_PASSWORD" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="U_FULLNAME" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="U_WORK_DATE" Type="DateTime" Precision="3" />
+          <Property Name="U_STATUS" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="U_POSITION" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="U_DEPARTMENT" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="U_FLAG" Type="Boolean" />
+          <NavigationProperty Name="ASSET_REQUEST" Relationship="Self.FK_ASSET_RE_SEND_REQU_USER" FromRole="USER" ToRole="ASSET_REQUEST" />
+          <NavigationProperty Name="ASSET_USER_RELATIONSHIP" Relationship="Self.FK_ASSET_US_RELATIONS_USER" FromRole="USER" ToRole="ASSET_USER_RELATIONSHIP" />
+          <NavigationProperty Name="HAND_OVER" Relationship="Self.FK_HAND_OVE_RECV_HAND_USER" FromRole="USER" ToRole="HAND_OVER" />
+          <NavigationProperty Name="HAND_OVER1" Relationship="Self.FK_HAND_OVE_SEND_HAND_USER" FromRole="USER" ToRole="HAND_OVER" />
+          <NavigationProperty Name="USER_TYPE" Relationship="Self.FK_USER_RELATIONS_USER_TYP" FromRole="USER" ToRole="USER_TYPE" />
+        </EntityType>
+        <EntityType Name="USER_TYPE">
+          <Key>
+            <PropertyRef Name="UT_ID" />
+          </Key>
+          <Property Name="UT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UT_ROLE" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="USERs" Relationship="Self.FK_USER_RELATIONS_USER_TYP" FromRole="USER_TYPE" ToRole="USER" />
+        </EntityType>
+        <Association Name="FK_ASSET_RE_RELATIONS_ASSET">
+          <End Role="ASSET" Type="Self.ASSET" Multiplicity="1" />
+          <End Role="ASSET_REQUEST" Type="Self.ASSET_REQUEST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSET">
+              <PropertyRef Name="AS_ID" />
+            </Principal>
+            <Dependent Role="ASSET_REQUEST">
+              <PropertyRef Name="AS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSET_RELATIONS_ASSET_TY">
+          <End Role="ASSET_TYPE" Type="Self.ASSET_TYPE" Multiplicity="1" />
+          <End Role="ASSET" Type="Self.ASSET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSET_TYPE">
+              <PropertyRef Name="AT_ID" />
+            </Principal>
+            <Dependent Role="ASSET">
+              <PropertyRef Name="AT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSET_US_RELATIONS_ASSET">
+          <End Role="ASSET" Type="Self.ASSET" Multiplicity="1" />
+          <End Role="ASSET_USER_RELATIONSHIP" Type="Self.ASSET_USER_RELATIONSHIP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSET">
+              <PropertyRef Name="AS_ID" />
+            </Principal>
+            <Dependent Role="ASSET_USER_RELATIONSHIP">
+              <PropertyRef Name="AS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSET_RE_RELATIONS_REQUEST_">
+          <End Role="REQUEST_TYPE" Type="Self.REQUEST_TYPE" Multiplicity="1" />
+          <End Role="ASSET_REQUEST" Type="Self.ASSET_REQUEST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REQUEST_TYPE">
+              <PropertyRef Name="RT_ID" />
+            </Principal>
+            <Dependent Role="ASSET_REQUEST">
+              <PropertyRef Name="RT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSET_RE_SEND_REQU_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="ASSET_REQUEST" Type="Self.ASSET_REQUEST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="U_ID" />
+            </Principal>
+            <Dependent Role="ASSET_REQUEST">
+              <PropertyRef Name="U_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSET_US_RELATIONS_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="ASSET_USER_RELATIONSHIP" Type="Self.ASSET_USER_RELATIONSHIP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="U_ID" />
+            </Principal>
+            <Dependent Role="ASSET_USER_RELATIONSHIP">
+              <PropertyRef Name="U_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HAND_OVE_RECV_HAND_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="HAND_OVER" Type="Self.HAND_OVER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="U_ID" />
+            </Principal>
+            <Dependent Role="HAND_OVER">
+              <PropertyRef Name="U_RECEIVE_ASSET" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HAND_OVE_SEND_HAND_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="HAND_OVER" Type="Self.HAND_OVER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="U_ID" />
+            </Principal>
+            <Dependent Role="HAND_OVER">
+              <PropertyRef Name="U_SEND_ASSET" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USER_RELATIONS_USER_TYP">
+          <End Role="USER_TYPE" Type="Self.USER_TYPE" Multiplicity="1" />
+          <End Role="USER" Type="Self.USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER_TYPE">
+              <PropertyRef Name="UT_ID" />
+            </Principal>
+            <Dependent Role="USER">
+              <PropertyRef Name="UT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ASSET_HAND_OVER_REALATIONSHIP">
+          <End Role="ASSET" Type="Self.ASSET" Multiplicity="*" />
+          <End Role="HAND_OVER" Type="Self.HAND_OVER" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="ASSET_MANAGEMENTEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ASSETs" EntityType="Self.ASSET" />
+          <EntitySet Name="ASSET_REQUEST" EntityType="Self.ASSET_REQUEST" />
+          <EntitySet Name="ASSET_TYPE" EntityType="Self.ASSET_TYPE" />
+          <EntitySet Name="ASSET_USER_RELATIONSHIP" EntityType="Self.ASSET_USER_RELATIONSHIP" />
+          <EntitySet Name="HAND_OVER" EntityType="Self.HAND_OVER" />
+          <EntitySet Name="REQUEST_TYPE" EntityType="Self.REQUEST_TYPE" />
+          <EntitySet Name="USERs" EntityType="Self.USER" />
+          <EntitySet Name="USER_TYPE" EntityType="Self.USER_TYPE" />
+          <AssociationSet Name="FK_ASSET_RE_RELATIONS_ASSET" Association="Self.FK_ASSET_RE_RELATIONS_ASSET">
+            <End Role="ASSET" EntitySet="ASSETs" />
+            <End Role="ASSET_REQUEST" EntitySet="ASSET_REQUEST" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSET_RELATIONS_ASSET_TY" Association="Self.FK_ASSET_RELATIONS_ASSET_TY">
+            <End Role="ASSET_TYPE" EntitySet="ASSET_TYPE" />
+            <End Role="ASSET" EntitySet="ASSETs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSET_US_RELATIONS_ASSET" Association="Self.FK_ASSET_US_RELATIONS_ASSET">
+            <End Role="ASSET" EntitySet="ASSETs" />
+            <End Role="ASSET_USER_RELATIONSHIP" EntitySet="ASSET_USER_RELATIONSHIP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSET_RE_RELATIONS_REQUEST_" Association="Self.FK_ASSET_RE_RELATIONS_REQUEST_">
+            <End Role="REQUEST_TYPE" EntitySet="REQUEST_TYPE" />
+            <End Role="ASSET_REQUEST" EntitySet="ASSET_REQUEST" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSET_RE_SEND_REQU_USER" Association="Self.FK_ASSET_RE_SEND_REQU_USER">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="ASSET_REQUEST" EntitySet="ASSET_REQUEST" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSET_US_RELATIONS_USER" Association="Self.FK_ASSET_US_RELATIONS_USER">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="ASSET_USER_RELATIONSHIP" EntitySet="ASSET_USER_RELATIONSHIP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HAND_OVE_RECV_HAND_USER" Association="Self.FK_HAND_OVE_RECV_HAND_USER">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="HAND_OVER" EntitySet="HAND_OVER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HAND_OVE_SEND_HAND_USER" Association="Self.FK_HAND_OVE_SEND_HAND_USER">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="HAND_OVER" EntitySet="HAND_OVER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_RELATIONS_USER_TYP" Association="Self.FK_USER_RELATIONS_USER_TYP">
+            <End Role="USER_TYPE" EntitySet="USER_TYPE" />
+            <End Role="USER" EntitySet="USERs" />
+          </AssociationSet>
+          <AssociationSet Name="ASSET_HAND_OVER_REALATIONSHIP" Association="Self.ASSET_HAND_OVER_REALATIONSHIP">
+            <End Role="ASSET" EntitySet="ASSETs" />
+            <End Role="HAND_OVER" EntitySet="HAND_OVER" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ASSET_MANAGEMENTModelStoreContainer" CdmEntityContainer="ASSET_MANAGEMENTEntities">
+          <EntitySetMapping Name="ASSETs">
+            <EntityTypeMapping TypeName="ASSET_MANAGEMENTModel.ASSET">
+              <MappingFragment StoreEntitySet="ASSET">
+                <ScalarProperty Name="AS_ID" ColumnName="AS_ID" />
+                <ScalarProperty Name="AT_ID" ColumnName="AT_ID" />
+                <ScalarProperty Name="AS_NAME" ColumnName="AS_NAME" />
+                <ScalarProperty Name="AS_STATUS" ColumnName="AS_STATUS" />
+                <ScalarProperty Name="AS_PURCHASE_DATE" ColumnName="AS_PURCHASE_DATE" />
+                <ScalarProperty Name="AS_PROVIDER" ColumnName="AS_PROVIDER" />
+                <ScalarProperty Name="AS_DESCRIPTION" ColumnName="AS_DESCRIPTION" />
+                <ScalarProperty Name="AS_VALUE" ColumnName="AS_VALUE" />
+                <ScalarProperty Name="AS_FLAG" ColumnName="AS_FLAG" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ASSET_REQUEST">
+            <EntityTypeMapping TypeName="ASSET_MANAGEMENTModel.ASSET_REQUEST">
+              <MappingFragment StoreEntitySet="ASSET_REQUEST">
+                <ScalarProperty Name="AR_ID" ColumnName="AR_ID" />
+                <ScalarProperty Name="U_ID" ColumnName="U_ID" />
+                <ScalarProperty Name="RT_ID" ColumnName="RT_ID" />
+                <ScalarProperty Name="AS_ID" ColumnName="AS_ID" />
+                <ScalarProperty Name="AR_REASON" ColumnName="AR_REASON" />
+                <ScalarProperty Name="AR_ASSET_STATUS" ColumnName="AR_ASSET_STATUS" />
+                <ScalarProperty Name="AR_REQUEST_DATE" ColumnName="AR_REQUEST_DATE" />
+                <ScalarProperty Name="AR_APPROVE_DATE" ColumnName="AR_APPROVE_DATE" />
+                <ScalarProperty Name="AR_STATUS" ColumnName="AR_STATUS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ASSET_TYPE">
+            <EntityTypeMapping TypeName="ASSET_MANAGEMENTModel.ASSET_TYPE">
+              <MappingFragment StoreEntitySet="ASSET_TYPE">
+                <ScalarProperty Name="AT_ID" ColumnName="AT_ID" />
+                <ScalarProperty Name="AT_NAME" ColumnName="AT_NAME" />
+                <ScalarProperty Name="AT_CODE" ColumnName="AT_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ASSET_USER_RELATIONSHIP">
+            <EntityTypeMapping TypeName="ASSET_MANAGEMENTModel.ASSET_USER_RELATIONSHIP">
+              <MappingFragment StoreEntitySet="ASSET_USER_RELATIONSHIP">
+                <ScalarProperty Name="ASSET_USER_RELATIONSHIP_ID" ColumnName="ASSET_USER_RELATIONSHIP_ID" />
+                <ScalarProperty Name="AS_ID" ColumnName="AS_ID" />
+                <ScalarProperty Name="U_ID" ColumnName="U_ID" />
+                <ScalarProperty Name="RECEIVE_DATE" ColumnName="RECEIVE_DATE" />
+                <ScalarProperty Name="HAND_OVER_DATE" ColumnName="HAND_OVER_DATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HAND_OVER">
+            <EntityTypeMapping TypeName="ASSET_MANAGEMENTModel.HAND_OVER">
+              <MappingFragment StoreEntitySet="HAND_OVER">
+                <ScalarProperty Name="HO_ID" ColumnName="HO_ID" />
+                <ScalarProperty Name="U_SEND_ASSET" ColumnName="U_SEND_ASSET" />
+                <ScalarProperty Name="U_RECEIVE_ASSET" ColumnName="U_RECEIVE_ASSET" />
+                <ScalarProperty Name="HO_DATE" ColumnName="HO_DATE" />
+                <ScalarProperty Name="HO_CONntext" ColumnName="HO_CONntext" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REQUEST_TYPE">
+            <EntityTypeMapping TypeName="ASSET_MANAGEMENTModel.REQUEST_TYPE">
+              <MappingFragment StoreEntitySet="REQUEST_TYPE">
+                <ScalarProperty Name="RT_ID" ColumnName="RT_ID" />
+                <ScalarProperty Name="RT_NAME" ColumnName="RT_NAME" />
+                <ScalarProperty Name="RT_CODE" ColumnName="RT_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERs">
+            <EntityTypeMapping TypeName="ASSET_MANAGEMENTModel.USER">
+              <MappingFragment StoreEntitySet="USER">
+                <ScalarProperty Name="U_ID" ColumnName="U_ID" />
+                <ScalarProperty Name="UT_ID" ColumnName="UT_ID" />
+                <ScalarProperty Name="U_USERNAME" ColumnName="U_USERNAME" />
+                <ScalarProperty Name="U_PASSWORD" ColumnName="U_PASSWORD" />
+                <ScalarProperty Name="U_FULLNAME" ColumnName="U_FULLNAME" />
+                <ScalarProperty Name="U_WORK_DATE" ColumnName="U_WORK_DATE" />
+                <ScalarProperty Name="U_STATUS" ColumnName="U_STATUS" />
+                <ScalarProperty Name="U_POSITION" ColumnName="U_POSITION" />
+                <ScalarProperty Name="U_DEPARTMENT" ColumnName="U_DEPARTMENT" />
+                <ScalarProperty Name="U_FLAG" ColumnName="U_FLAG" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USER_TYPE">
+            <EntityTypeMapping TypeName="ASSET_MANAGEMENTModel.USER_TYPE">
+              <MappingFragment StoreEntitySet="USER_TYPE">
+                <ScalarProperty Name="UT_ID" ColumnName="UT_ID" />
+                <ScalarProperty Name="UT_ROLE" ColumnName="UT_ROLE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ASSET_HAND_OVER_REALATIONSHIP" TypeName="ASSET_MANAGEMENTModel.ASSET_HAND_OVER_REALATIONSHIP" StoreEntitySet="ASSET_HAND_OVER_REALATIONSHIP">
+            <EndProperty Name="ASSET">
+              <ScalarProperty Name="AS_ID" ColumnName="AS_ID" />
+            </EndProperty>
+            <EndProperty Name="HAND_OVER">
+              <ScalarProperty Name="HO_ID" ColumnName="HO_ID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

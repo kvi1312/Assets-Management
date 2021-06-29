@@ -1,0 +1,86 @@
+﻿<!-- Main Sidebar Container -->
+@{
+    string strUrl = Request.Url.AbsoluteUri;
+    //string strPath = Request.ApplicationPath;
+    //string host = Request.Url.Host;
+    //string urlHome = "/";
+}
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="@Url.Action("Index", "Home")" class="brand-link">
+        <img src="~/Content/Admin/img/AdminLTELogo.png" alt="DTU Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">ASSET MANAGEMENT</span>
+    </a>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="/Content/Admin/img/user2-160x160.jpg" )" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a class="d-block">UserNameLogin</a>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <div id="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" role="menu" data-accordion="false">
+
+                    @*<li class="nav-item">
+                            <a href="@Url.Action("Index","User")" class="nav-link @ActiveMenu(new string[] { "User/Index", "User/Create", "User/Edit", "User/Details" }, strUrl)">
+                                <i class="fas fa-user nav-icon"></i>
+                                <p>Quản lý Người dùng</p>
+                            </a>
+                        </li>*@
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-list-alt nav-icon"></i>
+                            <p>Thiết bị Cá nhân</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-user nav-icon"></i>
+                            <p>Quản lý Người dùng</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-book-open nav-icon"></i>
+                            <p>Quản lý Thiết bị</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-file-alt nav-icon"></i>
+                            <p>Tình Trạng Thiết bị</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="@Url.Action("LoginV1","LoginTemp")" class="nav-link">
+                            <i class="nav-icon fas fa-sign-out-alt"></i>
+                            <p>Thoát</p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+
+</aside>
+
+@functions{
+    public string ActiveMenu(string[] action, string currentUrl)
+    {
+        foreach (var a in action)
+        {
+            if (currentUrl.ToLower().Contains(a.ToLower())) return "active";
+        }
+        return string.Empty;
+    }
+}

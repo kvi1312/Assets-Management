@@ -1,0 +1,22 @@
+@using BanDongHo.Common
+
+@{ 
+    var session = (UserLogin)Session[CommonConstands.USER_SESSION];
+}
+
+@if (session == null)
+{
+    <div>
+        <span><a href="~/dang-nhap">Sign In</a></span>
+        <span><a href="~/dang-ky">Sign Up</a></span>
+        <div class="clearfix"> </div>
+    </div>
+}
+else
+{
+    <div>
+        <span><a href="#">Welcome: @session.UserName</a></span>
+        <span><a href="~/Account/Logout">Sign Out</a></span>
+        <div class="clearfix"> </div>
+    </div>
+}

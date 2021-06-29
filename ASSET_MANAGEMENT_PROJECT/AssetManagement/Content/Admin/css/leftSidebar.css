@@ -1,0 +1,7 @@
+﻿.sidebar-link.active,
+.sidebar-link:focus {
+    /* background: #e2e8ed;*/
+    background: #0377fc;
+    color: #0377fc !important;
+    text-decoration: none;
+}

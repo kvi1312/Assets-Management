@@ -1,0 +1,198 @@
+﻿@model BanDongHo.Models.ViewModel.DetailViewModel
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+	$(function() {
+
+	    var menu_ul = $('.menu_drop > li > ul'),
+	           menu_a  = $('.menu_drop > li > a');
+
+	    menu_ul.hide();
+
+	    menu_a.click(function(e) {
+	        e.preventDefault();
+	        if(!$(this).hasClass('active')) {
+	            menu_a.removeClass('active');
+	            menu_ul.filter(':visible').slideUp('normal');
+	            $(this).addClass('active').next().stop(true,true).slideDown('normal');
+	        } else {
+	            $(this).removeClass('active');
+	            $(this).next().stop(true,true).slideUp('normal');
+	        }
+	    });
+
+	});
+</script>
+
+<!--start-breadcrumbs-->
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="breadcrumbs-main">
+            <ol class="breadcrumb">
+                <li><a href="~/Home/Index">Home</a></li>
+                <li class="active">Single</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<!--end-breadcrumbs-->
+<!--start-single-->
+<div class="single contact">
+    <div class="container">
+        <div class="single-main">
+            <div class="col-md-9 single-main-left">
+                <div class="sngl-top">
+                    <div class="col-md-5 single-top-left">
+                        <div class="flexslider">
+                            <ul class="slides">
+                                <li data-thumb="../../images/HINHNHO/@Model.Product.Product.HINHNHO/1.jpg">
+                                    <div class="thumb-image"> <img src="@Url.Content("~/images/HINHNHO/"+Model.Product.Product.HINHNHO+"/1.jpg")" data-imagezoom="true" class="img-responsive" alt="" /> </div>
+                                </li>
+                                <li data-thumb="../../images/HINHNHO/@Model.Product.Product.HINHNHO/2.jpg">
+                                    <div class="thumb-image"> <img src="@Url.Content("~/images/HINHNHO/"+Model.Product.Product.HINHNHO+"/2.jpg")" data-imagezoom="true" class="img-responsive" alt="" /> </div>
+                                </li>
+                                <li data-thumb="../../images/HINHNHO/@Model.Product.Product.HINHNHO/3.jpg">
+                                    <div class="thumb-image"> <img src="@Url.Content("~/images/HINHNHO/"+Model.Product.Product.HINHNHO+"/3.jpg")" data-imagezoom="true" class="img-responsive" alt="" /> </div>
+                                </li>
+                                
+                               
+                            </ul>
+                        </div>
+                        <!-- FlexSlider -->
+                        <script src="~/Scripts/js/imagezoom.js"></script>
+                        <script defer src="~/Scripts/js/jquery.flexslider.js"></script>
+                        <link rel="stylesheet" href="~/Content/css/flexslider.css" type="text/css" media="screen" />
+
+                        <script>
+						// Can also be used with $(document).ready()
+						$(window).load(function() {
+						  $('.flexslider').flexslider({
+							animation: "slide",
+							controlNav: "thumbnails"
+						  });
+						});
+                        </script>
+                    </div>
+                    <div class="col-md-7 single-top-right">
+                        <div class="single-para simpleCart_shelfItem">
+                            <h2>@Model.Product.Product.TENSP</h2>
+                            <p>Promotion: @Model.Product.Promotion %</p>
+                            <div class="star-on">
+                                <ul class="star-footer">
+                                    <li><a href="#"><i> </i></a></li>
+                                    <li><a href="#"><i> </i></a></li>
+                                    <li><a href="#"><i> </i></a></li>
+                                    <li><a href="#"><i> </i></a></li>
+                                    <li><a href="#"><i> </i></a></li>
+                                </ul>
+                                <div class="review">
+                                    
+
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+
+                            <h5 class="item_price">@String.Format("{0:0,0}", (Model.Product.Product.DONGIA*(1-(float)Model.Product.Promotion/100))) vnđ</h5>
+                            <p>@Model.Product.Product.MOTA</p>
+                            @*<div class="available">
+                                    <ul>
+                                        <li>
+                                            Color
+                                            <select>
+                                                <option>Silver</option>
+                                                <option>Black</option>
+                                                <option>Dark Black</option>
+                                                <option>Red</option>
+                                            </select>
+                                        </li>
+                                        <li class="size-in">
+                                            Size<select>
+                                                <option>Large</option>
+                                                <option>Medium</option>
+                                                <option>small</option>
+                                                <option>Large</option>
+                                                <option>small</option>
+                                            </select>
+                                        </li>
+                                        <div class="clearfix"> </div>
+                                    </ul>
+                                </div>*@
+                            <ul class="tag-men">
+                                <li>
+                                    <span>TAG</span>
+                                    <span class="women1">: @Model.Tag,</span>
+                                </li>
+                            </ul>
+                            <a href="~/Cart/AddProduct/@Model.Product.Product.MASP" class="add-cart item_add">ADD TO CART</a>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="tabs">
+                    <ul class="menu_drop">
+                        <li class="item3">
+                            <a href="#"><img src="~/images/arrow.png" alt="">Reviews</a>
+                            <ul>
+                                <li class="subitem1"><a>@Model.Product.Product.MOTA</a></li>
+                            </ul>
+                        </li>         
+                    </ul>
+                </div>
+                <div class="latestproducts">
+                    <div class="product-one">
+                        @foreach (var item in Model.ListProductsRelative)
+                        {
+                            <div class="col-md-4 product-left p-left">
+                                <div class="product-main simpleCart_shelfItem">
+                                    <a href="@Url.Content("~/Home/Detail/"+item.Product.MASP)" class="mask"><img class="img-responsive zoom-img" src="@Url.Content("~/images/HINHLON/"+item.Product.HINHLON)" alt="" /></a>
+                                    <div class="product-bottom">
+                                        <h3>@item.Product.TENSP</h3>
+                                        <p>Explore Now</p>
+                                        <h4><a class="item_add" href="#"><i></i></a> <span class="item_price">@String.Format("{0:0,0}", (item.Product.DONGIA*(1-(float)item.Promotion/100))) vnđ</span></h4>
+                                    </div>
+                                    <div class="srch">
+                                        <span>-@item.Promotion %</span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 single-right">
+                <div class="w_sidebar">
+                    <section class="sky-form" style="height:865px; overflow:hidden">
+                        <h4>New Products</h4>
+                        <div>
+                            <div class="col col-4" style="padding:5px">
+                                <marquee direction="up" vspace="10px" onmouseover="this.stop()" onmouseout="this.start()">
+                                    @foreach (var item in Model.ListNewProducts)
+                                    {
+                                        <div class="product-left p-left">
+                                            <div class="product-main simpleCart_shelfItem">
+                                                <a href="@Url.Content("~/Home/Detail/"+item.Product.MASP)" class="mask"><img class="img-responsive zoom-img" src="@Url.Content("~/images/HINHLON/"+item.Product.HINHLON)" alt="" /></a>
+                                                <div class="product-bottom">
+                                                    <h3>@item.Product.TENSP</h3>
+                                                    <p>Explore Now</p>
+                                                    <h4><a class="item_add" href="#"><i></i></a> <span class="item_price">@String.Format("{0:0,0}", item.Product.DONGIA) vnđ</span></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="height:10px"></div>
+                                    }
+                                </marquee>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+<!--end-single-->

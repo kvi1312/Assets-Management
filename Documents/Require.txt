@@ -1,0 +1,24 @@
+Yêu cầu:
+Tuần 1:
+14/06/2021: Làm việc với Remote Repository(Source, Doc, Db)
+    - Cài đặt Git và tạo tài khảo github
+    - Clone source
+    - Học các sử dụng Git (add, commit, push, pull,..)
+    - Tìm hiểu Cách xây Website trên Asp.Net Entity Framework
+
+15/06/2021: Tìm hiểu Cách vận hành Project MVC Entity
+    - Vào thư mục SOURCE_DEMO, tải project ASP.NET-MVC.zip về
+    - Mở project bằng Visual Studio. Chú ý: Tạo CSDL, chỉnh sửa kết nối để có để chạy được project
+    - Tạo Database và Insert dữ liệu bằng các lệnh sql có sẵn trong "ASP.NET-MVC\Database"
+    - Chỉnh sửa kết nối ở BanDongHo\Web.config và BanDongHo.Domain\App.config
+    ex:
+    connectionString="metadata=res://*/DataContext.BanDongHo.csdl|res://*/DataContext.BanDongHo.ssdl|res://*/DataContext.BanDongHo.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=ServerName_trongsqlserver;initial catalog=TênCSDL;user id=tênUserLoginSQL;password=mậtkhẩuUserLoginSQL;MultipleActiveResultSets=True;App=EntityFramework&quot;"
+    - Website sau khi chạy lên hoàn chỉnh: http://192.168.1.15:5550
+
+Bắt đầu Tuần thứ 2: 21/06/2021 - 06/08/2021.
+    - Pull Project về ASSET_MANAGEMENT_PROJECT
+    - Các bạn xem trong file FunctionBreakdown.xlsx và làm bám sát theo kế hoạch.
+    - Database Đông thiết kế, nhờ bạn support thêm.
+    - Làm việc trên các thư mục sau: Controllers, Views, Content, App_Start, Models, Scripts,  LeftSideBar.cshtml
+    - Hướng dẫn tạo Controller trong Documents\CreateCotroller\CreateController.md
+    - Mô tả Database design: Database\DATABASE SCHEMA V1.xlsx

@@ -1,0 +1,33 @@
+DỰ ÁN:
+Tên: Website Quản lý Tài sản Cá nhân Với Asp.net Entity Framework
+IDE: Visual Studio 2017 trở lên
+Laguage: C#, HTML, JavaScript, CSS
+DBMS: SQL Server 2014 trở lên (Dùng Azure Data Studio nếu không muốn cài Hệ quản trị CSDL Sql Server)
+    Connect:
+    host: dtuct.ddns.net
+    user: intership
+    pass: intership2021
+    Database: ASSET_MANAGEMENT
+
+MÔ TẢ HỆ THÔNG:
+1.Mô tả Hệ thống Quản lý Tài sản Cá Nhân
+    - Hệ thống sử dụng cho 1 công ty, văn phòng khi 1 cá nhân vào làm việc và được cấp các thiết bị sử dụng trong công việc, các phát sinh khi thiết bị có vấn đề và thông báo tình trạng
+    - Cần có bảng User để thêm người dùng vào hệ thống và phần quyền
+    - Các thiết bị như:
+        + Máy tính: CPU, Màn hình, Chuột, Bàn phím,..
+        + Bàn ghế
+        + Tủ
+        + Camera
+        + ....
+
+2. Chức năng Hệ thống:
+    - Đăng nhập (Đông - Xây dựng backend JWT xác thực)
+    - Chức năng đăng nhập (Phân quyền  Admin và User)
+            + Admin: sử dụng toàn bộ tính năng hệ thông tin
+            + User: Thông báo Thiết bị hỏng hóc, Yêu cầu thay đổi thiết bị, Bàn Giao Thiết bị cho người khác
+    - Danh sách Thiết bị (Thêm, Chỉnh sửa, Xóa(Gắn cờ không còn sử dụng))
+    - Thông báo Thiết bị hỏng hóc
+    - Yêu cầu thay đổi Thiết bị
+    - Danh sách Thiết bị hỏng hóc
+    - Danh sách Yêu cầu thay đổi thiết bị
+    - Bàn Giao Thiết bị cho người khác

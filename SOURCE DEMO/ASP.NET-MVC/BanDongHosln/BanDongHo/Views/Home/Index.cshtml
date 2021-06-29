@@ -1,0 +1,127 @@
+﻿@model BanDongHo.Models.ViewModel.HomePageViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--banner-starts-->
+<div class="bnr" id="home">
+    <div id="top" class="callbacks_container">
+        <ul class="rslides" id="slider4">
+            <li>
+                <img src="~/images/bnr-1.jpg" alt="" />
+            </li>
+            <li>
+                <img src="~/images/bnr-2.jpg" alt="" />
+            </li>
+            <li>
+                <img src="~/images/bnr-3.jpg" alt="" />
+            </li>
+        </ul>
+    </div>
+    <div class="clearfix"> </div>
+</div>
+<!--banner-ends-->
+<!--Slider-Starts-Here-->
+<script src="~/Scripts/js/responsiveslides.min.js"></script>
+<script>
+    // You can also use "$(window).load(function() {"
+    $(function () {
+        // Slideshow 4
+        $("#slider4").responsiveSlides({
+            auto: true,
+            pager: true,
+            nav: true,
+            speed: 500,
+            namespace: "callbacks",
+            before: function () {
+                $('.events').append("<li>before event fired.</li>");
+            },
+            after: function () {
+                $('.events').append("<li>after event fired.</li>");
+            }
+        });
+
+    });
+</script>
+<!--End-slider-script-->
+<!--about-starts-->
+<div class="about">
+    <div class="container">
+        <div class="about-top grid-1">
+            @foreach (var item in Model.ProductsSelling)
+            {
+                string source = "~/images/HINHLON/" + item.HINHLON;
+
+                <div class="col-md-4 about-left">
+                    <a href="@Url.Content("~/Home/Detail/" + item.MASP)">
+                        <figure class="effect-bubba">
+                            <img class="img-responsive" src="@Url.Content(source)" alt="" />
+
+                            @*<img class="img-responsive" src="@tem.HINHLON" alt="" />*@
+                            <figcaption>
+                                <h2>@item.TENSP</h2>
+                                <p>@item.MOTA</p>
+                            </figcaption>
+                        </figure>
+                    </a>
+                </div>
+            }
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<!--about-end-->
+<!--product-starts-->
+<div class="product">
+    <div class="container">
+        <div class="product-top">
+            <div class="product-one">
+                @foreach (var item in Model.NewProducts.Skip(0).Take(4))
+                {
+                    string source = "~/images/HINHLON/" + item.Product.HINHLON;
+                    string url = "~/Home/Detail/" + item.Product.MASP;
+                    <div class="col-md-3 product-left">
+                        <div class="product-main simpleCart_shelfItem">
+                            <a href="@Url.Content(url)" class="mask"><img class="img-responsive zoom-img" src="@Url.Content(source)" alt="" /></a>
+                            <div class="product-bottom">
+                                <h3>@item.Product.TENSP</h3>
+                                <p>Explore Now</p>
+                                @*Dịch dấu chấm động đơn giá sử dụng string.Format("{0:0,0}", tham số)*@
+                                <h4><a class="item_add" href="#"><i></i></a> <span class="item_price">@String.Format("{0:0,0}", (item.Product.DONGIA*(100-item.Promotion)/100)) VNĐ</span></h4>
+                            </div>
+                            <div class="srch">
+                                <span>-@item.Promotion %</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="clearfix"></div>
+            </div>
+            <div class="product-one">
+                @foreach (var item in Model.NewProducts.Skip(4).Take(4))
+                {
+                    string source = "~/images/HINHLON/" + item.Product.HINHLON;
+                    string url = "~/Home/Detail/" + item.Product.MASP;
+                    <div class="col-md-3 product-left">
+                        <div class="product-main simpleCart_shelfItem">
+                            <a href="@Url.Content(url)" class="mask"><img class="img-responsive zoom-img" src="@Url.Content(source)" alt="" /></a>
+                            <div class="product-bottom">
+                                <h3>@item.Product.TENSP</h3>
+                                <p>Explore Now</p>
+                                @*Dịch dấu chấm động đơn giá sử dụng string.Format("{0:0,0}", tham số)*@
+                                <h4><a class="item_add" href="#"><i></i></a> <span class="item_price">@String.Format("{0:0,0}", (item.Product.DONGIA * (100 - item.Promotion) / 100)) VNĐ</span></h4>
+                            </div>
+                            <div class="srch">
+                                <span>-@item.Promotion%</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--product-end-->
